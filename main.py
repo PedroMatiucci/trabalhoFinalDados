@@ -6,11 +6,15 @@ import time
 import os
 
 # Configurações iniciais
-DOWNLOAD_DIR = "dados"
+DOWNLOAD_DIR = r"C:\Users\pmati\PycharmProjects\trabalhoFinalDados\dados"
 
 # Configuração para baixar arquivos automaticamente
 options = webdriver.ChromeOptions()
-prefs = {"download.default_directory": DOWNLOAD_DIR}
+prefs = {"download.default_directory": DOWNLOAD_DIR,  # Define o diretório padrão
+    "download.prompt_for_download": False,       # Não perguntar onde salvar
+    "download.directory_upgrade": True,          # Permite atualizar o diretório de download
+    "safebrowsing.enabled": True
+         }
 options.add_experimental_option("prefs", prefs)
 
 # Inicializa o driver
@@ -32,13 +36,16 @@ try:
 
     # Aguarda até que o segundo botão esteja clicável
     button_acessar = wait.until(
-        EC.element_to_be_clickable((By.XPATH, "/html/body/div/section/div/div[3]/div[2]/div[3]/div[2]/div/div[2]/div[2]/div[2]/div/button[1]"))
+        EC.element_to_be_clickable((By.XPATH, "/html/body/div/section/div/div[3]/div[2]/div[3]/div[2]/div/div[35]/div[2]/div[2]/div/button[1]"))
     )
-    print('cheguei')
+    nova_url = driver.current_url
+    print("URL da nova aba:", nova_url)
     button_acessar.click()
-    print('cliquei')
-
     driver.switch_to.window(driver.window_handles[1])
+
+
+    nova_url = driver.current_url
+    print("URL da nova aba:", nova_url)
     # Aguarda o download do arquivo (ajuste o tempo se necessário)
     time.sleep(10)
 
@@ -53,4 +60,4 @@ finally:
     # Fecha o navegador
     driver.quit()
 
-#TOdo quando clica o botao abre outro site adicnoar suporte para isso
+#TOdo qadicionar requests para baixar o link correto
