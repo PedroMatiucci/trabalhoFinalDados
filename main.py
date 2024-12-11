@@ -64,13 +64,14 @@ class WebScraper:
             print("Nenhum arquivo CSV encontrado.")
             return False
 
-    def wait_for_download(self, timeout=30):
+    def wait_for_download(self, timeout=500):
         """Espera até que o arquivo seja completamente baixado."""
         time.sleep(1)
         end_time = time.time() + timeout
         while time.time() < end_time:
             if any(file.endswith(".crdownload") for file in os.listdir(self.download_dir)):
                 # Ainda está baixando
+                print("esperando mais")
                 time.sleep(5)
             else:
                 # Nenhum arquivo .crdownload encontrado, download concluído
